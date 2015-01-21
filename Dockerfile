@@ -5,11 +5,15 @@
 FROM debian:unstable
 MAINTAINER hal
 
-ENV HOME /root
+ENV HOME=/root DEBIAN_FRONTEND=noninteractive
+
+# Paramétrage de certains paquets
+ADD preseed.txt /root/
 
 # Installation des paquets requis
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y update \
-    && apt-get -y install curl dcraw libav-tools wget xz-utils \
+RUN debconf-set-selections /root/preseed.txt \
+    && apt-get -y update \
+    && apt-get -y install curl dcraw libav-tools locales wget xz-utils \
     && apt-get -y --no-install-recommends install openjdk-8-jre \
     && apt-get clean
 
