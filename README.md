@@ -2,7 +2,9 @@
 A Dockerfile for Serviio media server
 
 ## Build
+```
 docker build -t="hal91190/serviio" .
+```
 
 ## Run
 ### As a daemon
