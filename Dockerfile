@@ -2,19 +2,22 @@
 # cf. https://github.com/HedgehogNinja/docker-serviio
 # cf. https://github.com/sergeyfd/docker-serviio
 
-FROM debian:testing
+FROM debian:unstable
 MAINTAINER hal
 
 ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
 
 # Installation des paquets requis
-RUN apt-get -y update \
-    && apt-get -y install curl libav-tools wget dcraw
-RUN apt-get -y --no-install-recommends install default-jre
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y update \
+    && apt-get -y install curl dcraw libav-tools wget xz-utils \
+    && apt-get -y --no-install-recommends install openjdk-8-jre \
+    && apt-get clean
 
-# Cration du lien pour ffmpeg
-RUN ln -s /usr/bin/avconv /usr/bin/ffmpeg
+# Installation de ffmpeg
+RUN wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-2.5.3-64bit-static.tar.xz -O - \
+    | tar xJ -C /opt \
+    && ln -s /opt/ffmpeg-2.5.3-64bit-static /opt/ffmpeg
+ENV PATH $PATH:/opt/ffmpeg
 
 # Installation de serviio
 # récupération de la page de téléchargement
@@ -27,7 +30,7 @@ RUN rm /tmp/download.html
 # Installation dans /opt
 RUN mkdir -p /opt
 RUN tar -zxvf /tmp/serviio-latest.tar.gz -C /opt
-RUN ls /opt/ | xargs echo "/opt/" | sed 's/ //' | xargs -I {} mv {} "/opt/serviio" 
+RUN ls /opt | grep serviio | xargs echo "/opt/" | sed 's/ //' | xargs -I {} mv {} "/opt/serviio" 
 RUN rm /tmp/serviio-latest.tar.gz
 
 # la bibliothèque
