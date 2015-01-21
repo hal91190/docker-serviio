@@ -40,6 +40,9 @@ RUN tar -zxvf /tmp/serviio-latest.tar.gz -C /opt
 RUN ls /opt | grep serviio | xargs echo "/opt/" | sed 's/ //' | xargs -I {} mv {} "/opt/serviio" 
 RUN rm /tmp/serviio-latest.tar.gz
 
+# la base de données
+VOLUME ["/opt/serviio/library"]
+
 # la bibliothèque
 VOLUME ["/medialibs"]
 

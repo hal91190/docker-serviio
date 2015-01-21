@@ -16,7 +16,9 @@ docker run -d \
     -p 8895:8895 \
     -p 1900:1900/udp \
     -v /mnt/MyBook:/medialibs \
+    -v /var/lib/serviio:/opt/serviio/library \
     -v /var/log/serviio:/opt/serviio/log \
+    --restart=always \
     --name="serviio" \
     hal91190/serviio
 ```
@@ -30,6 +32,7 @@ docker run -i -t \
     -p 8895:8895 \
     -p 1900:1900/udp \
     -v /mnt/MyBook:/medialibs \
+    -v /var/lib/serviio:/opt/serviio/library \
     -v /var/log/serviio:/opt/serviio/log \
     --name="serviio" \
     hal91190/serviio \
