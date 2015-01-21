@@ -10,6 +10,7 @@ docker build -t="hal91190/serviio" .
 ### As a daemon
 ```
 docker run -d \
+    --net=host \
     -p 23423:23423 \
     -p 23424:23424 \
     -p 8895:8895 \
@@ -23,6 +24,7 @@ docker run -d \
 ### In interactive mode
 ```
 docker run -i -t \
+    --net=host \
     -p 23423:23423 \
     -p 23424:23424 \
     -p 8895:8895 \
