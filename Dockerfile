@@ -13,9 +13,12 @@ ADD preseed.txt /root/
 # Installation des paquets requis
 RUN debconf-set-selections /root/preseed.txt \
     && apt-get -y update \
-    && apt-get -y install curl dcraw libav-tools locales wget xz-utils \
+    && apt-get -y install curl dcraw libav-tools locales tzdata wget xz-utils \
     && apt-get -y --no-install-recommends install openjdk-8-jre \
-    && apt-get clean
+    && apt-get clean \
+    && /usr/sbin/update-locale LANG=fr_FR.UTF-8
+
+ENV LANG=fr_FR.UTF-8
 
 # Installation de ffmpeg
 RUN wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-2.5.3-64bit-static.tar.xz -O - \
