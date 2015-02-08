@@ -2,28 +2,33 @@
 # cf. https://github.com/HedgehogNinja/docker-serviio
 # cf. https://github.com/sergeyfd/docker-serviio
 
-FROM debian:unstable
+FROM hal91190/debian
 MAINTAINER hal
 
 ENV HOME=/root DEBIAN_FRONTEND=noninteractive
 
-# Paramétrage de certains paquets
-ADD preseed.txt /root/
+# Installation de Oracle java 8
+RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list \
+ && echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list \
+ && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 \
+ && echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections \
+ && apt-get -y update \
+ && apt-get -y install oracle-java8-installer
+
+ENV J2SDKDIR=/usr/lib/jvm/java-8-oracle \
+    J2REDIR=/usr/lib/jvm/java-8-oracle/jre \
+    PATH=$PATH:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin \
+    JAVA_HOME=/usr/lib/jvm/java-8-oracle \
+    DERBY_HOME=/usr/lib/jvm/java-8-oracle/db
 
 # Installation des paquets requis
-RUN debconf-set-selections /root/preseed.txt \
-    && apt-get -y update \
-    && apt-get -y install curl dcraw libav-tools locales tzdata wget xz-utils \
-    && apt-get -y --no-install-recommends install openjdk-8-jre \
-    && apt-get clean \
-    && /usr/sbin/update-locale LANG=fr_FR.UTF-8
-
-ENV LANG=fr_FR.UTF-8
+RUN apt-get -y install curl dcraw libav-tools wget xz-utils \
+ && apt-get clean
 
 # Installation de ffmpeg
-RUN wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-2.5.3-64bit-static.tar.xz -O - \
-    | tar xJ -C /opt \
-    && ln -s /opt/ffmpeg-2.5.3-64bit-static /opt/ffmpeg
+RUN wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-2.5.3-64bit-static.tar.xz -O - | tar xJ -C /opt \
+ && ln -s /opt/ffmpeg-2.5.3-64bit-static /opt/ffmpeg
+
 ENV PATH $PATH:/opt/ffmpeg
 
 # Installation de serviio

@@ -1,6 +1,0 @@
-tzdata tzdata/Areas select Europe
-tzdata tzdata/Zones/Europe select Paris
-
-locales locales/locales_to_be_generated multiselect   fr_FR.UTF-8 UTF-8
-locales locales/default_environment_locale select    fr_FR.UTF-8
-
