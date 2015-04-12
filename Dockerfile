@@ -27,23 +27,19 @@ RUN apt-get -y install curl dcraw libav-tools wget xz-utils \
 
 # Installation de ffmpeg
 RUN wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz -O - | tar xJ -C /opt \
- && ln -s /opt/ffmpeg-2.6.1-64bit-static /opt/ffmpeg
+ && ln -s /opt/ffmpeg-2.6.2-64bit-static /opt/ffmpeg
 
 ENV PATH $PATH:/opt/ffmpeg
 
 # Installation de serviio
-# récupération de la page de téléchargement
-RUN wget --output-document=/tmp/download.html http://serviio.org/download
-
-# extrait le lien de téléchargement et télécharge dans /tmp/serviio-latest.tar.gz 
-RUN grep -oEm 1 "<a href=\".*(linux.tar.gz)\"" /tmp/download.html | cut -d\" -f2 | xargs wget --output-document=/tmp/serviio-latest.tar.gz
-RUN rm /tmp/download.html
+# Récupération de serviio
+RUN wget --output-document=/tmp/serviio.tar.gz http://download.serviio.org/releases/serviio-1.5.2-linux.tar.gz
 
 # Installation dans /opt
 RUN mkdir -p /opt
-RUN tar -zxvf /tmp/serviio-latest.tar.gz -C /opt
-RUN ls /opt | grep serviio | xargs echo "/opt/" | sed 's/ //' | xargs -I {} mv {} "/opt/serviio" 
-RUN rm /tmp/serviio-latest.tar.gz
+RUN tar -zxvf /tmp/serviio.tar.gz -C /opt
+RUN ls /opt | grep serviio | xargs echo "/opt/" | sed 's/ //' | xargs -I {} mv {} "/opt/serviio"
+RUN rm /tmp/serviio.tar.gz
 
 # la base de données
 VOLUME ["/opt/serviio/library"]
