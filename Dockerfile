@@ -27,7 +27,7 @@ RUN apt-get -y install curl dcraw libav-tools wget xz-utils \
 
 # Installation de ffmpeg
 RUN wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz -O - | tar xJ -C /opt \
- && ln -s /opt/ffmpeg-2.6.2-64bit-static /opt/ffmpeg
+ && ln -s /opt/$(cd /opt; ls -d ffmpeg-*) /opt/ffmpeg
 
 ENV PATH $PATH:/opt/ffmpeg
 
