@@ -7,6 +7,17 @@ docker build -t="hal91190/serviio:1.5.2" .
 ```
 
 ## Run
+### With docker-compose
+To start
+```
+docker-compose up
+```
+
+To stop (and destroy)
+```
+docker-compose stop; docker-compose rm -f
+```
+
 ### As a daemon
 ```
 docker run -d \

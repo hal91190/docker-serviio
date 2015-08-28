@@ -1,0 +1,14 @@
+serviio:
+    build: .
+    net: "host"
+    ports:
+        - "23423:23423"
+        - "23424:23424"
+        - "8895:8895"
+        - "1900:1900/udp"
+    volumes:
+        - /mnt/mybook:/medialibs
+#        - /mnt/disk0:/medialibs
+        - /var/lib/serviio:/opt/serviio/library
+        - /var/log/serviio:/opt/serviio/log
+    restart: always
