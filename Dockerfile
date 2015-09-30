@@ -2,7 +2,7 @@
 # cf. https://github.com/HedgehogNinja/docker-serviio
 # cf. https://github.com/sergeyfd/docker-serviio
 
-FROM hal91190/debian
+FROM hal91190/debian-testing-fr
 MAINTAINER hal
 
 ENV HOME=/root DEBIAN_FRONTEND=noninteractive
