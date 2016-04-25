@@ -3,7 +3,7 @@ A Dockerfile for Serviio media server
 
 ## Build
 ```
-docker build -t="hal91190/serviio:1.5.2" .
+docker build -t="hal91190/serviio:1.6.1" .
 ```
 
 ## Run
@@ -31,7 +31,7 @@ docker run -d \
     -v /var/log/serviio:/opt/serviio/log \
     --restart=always \
     --name="serviio" \
-    hal91190/serviio:1.5.2
+    hal91190/serviio:1.6.1
 ```
 
 ### In interactive mode
@@ -46,7 +46,7 @@ docker run -i -t \
     -v /var/lib/serviio:/opt/serviio/library \
     -v /var/log/serviio:/opt/serviio/log \
     --name="serviio" \
-    hal91190/serviio:1.5.2 \
+    hal91190/serviio:1.6.1 \
     /bin/bash
 ```
 
