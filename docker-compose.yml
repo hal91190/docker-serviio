@@ -11,4 +11,4 @@ serviio:
 #        - /mnt/disk0:/medialibs
         - /var/lib/serviio:/opt/serviio/library
         - /var/log/serviio:/opt/serviio/log
-    restart: always
+    restart: unless-stopped
